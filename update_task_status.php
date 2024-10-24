@@ -1,8 +1,9 @@
 <?php
 include('includes/auth.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST['status'])) {
     $task_id = intval($_POST['id']);
+    $status = intval($_POST['status']); // Capture the status from POST
     $user_id = $_SESSION['user_id'];
 
     // Verifikasi bahwa task milik user yang sedang login
@@ -13,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
     if ($stmt->num_rows > 0) {
         $stmt->close();
-        // Update status task ke "completed"
-        $update_stmt = $conn->prepare("UPDATE tasks SET is_completed = 1 WHERE id = ?");
-        $update_stmt->bind_param("i", $task_id);
+        // Update status task sesuai dengan status yang dikirim
+        $update_stmt = $conn->prepare("UPDATE tasks SET is_completed = ? WHERE id = ?");
+        $update_stmt->bind_param("ii", $status, $task_id);
         $update_stmt->execute();
         $update_stmt->close();
         echo "success";
@@ -23,3 +24,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
         echo "error";
     }
 }
+?>

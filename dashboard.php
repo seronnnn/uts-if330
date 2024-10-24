@@ -72,13 +72,14 @@ $result = $stmt->get_result();
         <ul class="todo-list space-y-4 mb-6 flex-grow">
             <?php if ($result->num_rows > 0) { ?>
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                    <li
-                        class="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow-md hover:bg-gray-200 transition duration-300">
-                        <a href="view_todo.php?id=<?php echo $row['id']; ?>"
-                            class="text-blue-600 hover:text-blue-700 font-semibold"><?php echo htmlspecialchars($row['title']); ?></a>
-                        <a href="delete_todo.php?id=<?php echo $row['id']; ?>"
-                            class="text-red-500 hover:text-red-700 font-medium">Delete</a>
+                    <li class="flex justify-between items-center bg-gray-100 p-4 rounded-md border border-gray-200 hover:bg-gray-200 transition duration-300 cursor-pointer"
+                        onclick="window.location.href='view_todo.php?id=<?php echo $row['id']; ?>'">
+                        <span class="flex-grow tex-blue-600 hover:text-blue-700 font-semibold">
+                            <?php echo htmlspecialchars($row['title']); ?>
+                        </span>
+                        <a href="delete_todo.php?id=<?php echo $row['id']; ?>" class="text-red-500 hover:text-red-700 font-medium ml-4">Delete</a>
                     </li>
+
                 <?php } ?>
             <?php } else { ?>
                 <li class="text-gray-500 text-center p-4">No to-do lists found. Create your first one!</li>

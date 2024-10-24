@@ -53,13 +53,13 @@ $tasks = $stmt->get_result();
             <select name="status" class="px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 mr-2">
                 <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All Tasks</option>
                 <option value="completed" <?php echo $status_filter === 'completed' ? 'selected' : ''; ?>>Completed Tasks</option>
-                <option value="incomplete" <?php echo $status_filter === 'incomplete' ? 'selected' : ''; ?>>Incomplete Tasks</option>
+                <option value="on going" <?php echo $status_filter === 'incomplete' ? 'selected' : ''; ?>>on going Tasks</option>
             </select>
             <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition duration-300">Filter</button>
         </form>
         <ul class="space-y-4 flex-grow">
             <?php while ($task = $tasks->fetch_assoc()) { ?>
-                <li class="flex justify-between items-center bg-gray-50 p-4 rounded-md shadow-sm hover:bg-indigo-100 transition duration-300 cursor-pointer" onclick="openModal(<?php echo $task['id']; ?>, '<?php echo addslashes($task['description']); ?>', '<?php echo $task['is_completed']; ?>')">
+                <li class="flex justify-between items-center bg-gray-50 p-4 rounded-md border border-gray-200 hover:bg-indigo-100 transition duration-300 cursor-pointer" onclick="openModal(<?php echo $task['id']; ?>, '<?php echo addslashes($task['description']); ?>', '<?php echo $task['is_completed']; ?>')">
                     <span class="flex items-center flex-grow <?php echo $task['is_completed'] ? 'line-through text-gray-500' : 'text-gray-800'; ?>">
                         <i class="<?php echo $task['is_completed'] ? 'fas fa-check-circle text-green-500 mr-2' : 'fas fa-circle text-gray-400 mr-2'; ?>"></i>
                         <?php echo htmlspecialchars($task['description']); ?>
@@ -71,8 +71,10 @@ $tasks = $stmt->get_result();
                         } else {
                             echo "No due date";
                         }
-                        ?>
+                        ?>   
                     </span>
+                    <a href="delete_task.php?id=<?php echo $task['id']; ?>" class="text-red-500 hover:text-red-700 font-medium ml-4" 
+                        onclick="event.stopPropagation(); return confirm('Are you sure you want to delete this task?');">Delete</a>
                 </li>
             <?php } ?>
         </ul>
@@ -99,23 +101,25 @@ $tasks = $stmt->get_result();
 
             descriptionElement.textContent = taskDescription;
 
-            if (isCompleted == 1) {
-                completeButton.disabled = true;
-                completeButton.textContent = "Already Completed";
-                completeButton.classList.add('bg-gray-500', 'hover:bg-gray-600');
-                completeButton.classList.remove('bg-green-500', 'hover:bg-green-600');
-            } else {
-                completeButton.disabled = false;
-                completeButton.textContent = "Mark as Completed";
-                completeButton.classList.remove('bg-gray-500', 'hover:bg-gray-600');
-                completeButton.classList.add('bg-green-500', 'hover:bg-green-600');
-                completeButton.onclick = function () {
-                    markAsCompleted(taskId);
-                };
-            }
+            completeButton.disabled = false;
+            completeButton.classList.remove('bg-gray-500', 'hover:bg-gray-600', 'bg-green-500', 'hover:bg-green-600', 'bg-yellow-500', 'hover:bg-yellow-600');
 
-            modal.style.display = 'flex';
-        }
+            if (isCompleted == 0) {
+                completeButton.textContent = "Mark as Completed";
+                completeButton.classList.add('bg-green-500', 'hover:bg-green-600');
+                completeButton.onclick = function() {
+                    markAsCompleted(taskId);  
+            };
+            } else {
+                completeButton.textContent = "Mark as On Going";
+                completeButton.classList.add('bg-red-500', 'hover:bg-red-600');
+                completeButton.onclick = function() {
+                    markAsOngoing(taskId); 
+            };
+    }
+
+    modal.style.display = 'flex';
+}
 
         function closeModal() {
             const modal = document.getElementById('taskModal');
@@ -131,7 +135,30 @@ $tasks = $stmt->get_result();
                     location.reload();
                 }
             };
-            xhr.send("id=" + taskId);
+            xhr.send("id=" + taskId + "&status=1"); 
+        }
+
+        function markAsIncomplete(taskId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_task_status.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    location.reload();
+                }
+            };
+            xhr.send("id=" + taskId + "&status=0"); 
+        }
+        function markAsOngoing(taskId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_task_status.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    location.reload();
+                }
+            };
+            xhr.send("id=" + taskId + "&status=0"); 
         }
     </script>
     <style>
