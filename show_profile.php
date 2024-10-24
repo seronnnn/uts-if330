@@ -1,7 +1,8 @@
 <?php
 include('includes/auth.php');
-
 $user_id = $_SESSION['user_id'];
+
+$_PAGETITLE = "";
 
 // Ambil informasi user dari database
 $stmt = $conn->prepare("SELECT username, email, created_at FROM users WHERE id = ?");
@@ -12,14 +13,7 @@ $stmt->fetch();
 $stmt->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+<?php include_once('partials/header.php'); ?>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Profile Details</h2>
@@ -43,4 +37,4 @@ $stmt->close();
         </div>
     </div>
 </body>
-</html>
+<?php include_once('partials/footer.php'); ?>

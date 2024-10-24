@@ -38,47 +38,7 @@ $stmt->execute();
 $tasks = $stmt->get_result();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View To-Do List</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 50;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: slideDown 0.3s ease-out;
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        #content {
-            max-width: 800px;
-            height: 90vh;
-            min-height: 500px;
-            overflow-y: auto;
-        }
-    </style>
-</head>
+<?php include_once('partials/header.php'); ?>
 <body class="bg-gradient-to-r from-indigo-300 to-blue-500 min-h-screen flex items-center justify-center">
     <div id="content" class="bg-white p-8 rounded-lg shadow-lg w-full flex flex-col justify-between">
         <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700"><?php echo htmlspecialchars($title); ?></h2>
@@ -174,5 +134,38 @@ $tasks = $stmt->get_result();
             xhr.send("id=" + taskId);
         }
     </script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.3s ease-out;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        #content {
+            max-width: 800px;
+            height: 90vh;
+            min-height: 500px;
+            overflow-y: auto;
+        }
+    </style>
 </body>
-</html>
+<?php include_once('partials/footer.php'); ?>

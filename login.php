@@ -1,6 +1,8 @@
 <?php
-// session_start();
 include('includes/config.php');
+session_start();
+
+$_PAGETITLE = "Login";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -29,14 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Online To-Do List</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+<?php include_once('partials/header.php'); ?>
 <body class="flex items-center justify-center h-screen bg-gradient-to-r from-green-400 to-blue-500">
     <div class="bg-white bg-opacity-10 p-10 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-3xl font-bold text-white mb-6 text-center">Login</h2>
@@ -54,5 +49,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         <p class="text-white mt-6 text-center">Don't have an account? <a href="register.php" class="text-blue-200 hover:underline">Sign up here</a>.</p>
     </div>
-</body>
-</html>
+    </body>
+<?php include_once('partials/footer.php'); ?>

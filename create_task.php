@@ -1,10 +1,11 @@
 <?php
-include('includes/auth.php'); // Pastikan user sudah login
+include('includes/auth.php'); 
+
+$_PAGETITLE = "Tambah Task Baru";
 
 if (isset($_GET['todo_list_id'])) {
-    $todo_list_id = intval($_GET['todo_list_id']); // Ambil ID to-do list dari URL
+    $todo_list_id = intval($_GET['todo_list_id']); 
 
-    // Verifikasi bahwa to-do list ini milik user yang sedang login
     $user_id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT id FROM todo_lists WHERE id = ? AND user_id = ?");
     $stmt->bind_param("ii", $todo_list_id, $user_id);
@@ -12,14 +13,13 @@ if (isset($_GET['todo_list_id'])) {
     $stmt->store_result();
     
     if ($stmt->num_rows === 0) {
-        // Jika to-do list tidak ditemukan atau bukan milik user ini, redirect ke dashboard
         header("Location: dashboard.php");
         exit();
     }
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $task_description = $_POST['task_description'];
-        $due_date = !empty($_POST['due_date']) ? $_POST['due_date'] : null; // Ambil due date jika ada
+        $due_date = !empty($_POST['due_date']) ? $_POST['due_date'] : null; 
         
         $task_stmt = $conn->prepare("INSERT INTO tasks (todo_list_id, description, due_date) VALUES (?, ?, ?)");
         $task_stmt->bind_param("iss", $todo_list_id, $task_description, $due_date);
@@ -34,20 +34,12 @@ if (isset($_GET['todo_list_id'])) {
         $task_stmt->close();
     }
 } else {
-    // Jika tidak ada todo_list_id di URL, redirect ke dashboard
     header("Location: dashboard.php");
     exit();
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Task</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+<?php include_once('partials/header.php'); ?>
 <body class="flex items-center justify-center h-screen bg-gradient-to-r from-green-400 to-blue-500">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Add New Task</h2>
@@ -68,4 +60,4 @@ if (isset($_GET['todo_list_id'])) {
         </div>
     </div>
 </body>
-</html>
+<?php include_once('partials/footer.php'); ?>

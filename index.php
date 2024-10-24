@@ -2,21 +2,15 @@
 session_start();
 include('includes/config.php');
 
-// Jika user sudah login, redirect ke dashboard
+$_PAGETITLE = "Welcome";
+
 if (isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
     exit();
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Online To-Do List</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+<?php include_once('partials/header.php'); ?>
 <body class="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-600">
     <div class="bg-white bg-opacity-10 p-10 rounded-lg shadow-lg text-center max-w-md w-full">
         <h1 class="text-4xl font-bold text-white mb-6">Welcome to the Online To-Do List</h1>
@@ -27,4 +21,4 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 </body>
-</html>
+<?php include_once('partials/footer.php'); ?>

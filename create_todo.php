@@ -1,6 +1,8 @@
 <?php
 include('includes/auth.php');
 
+$_PAGETITLE = "Tambah Todo Baru";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $user_id = $_SESSION['user_id'];
@@ -30,14 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New To-Do List</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+<?php include_once('partials/header.php'); ?>
 <body class="flex items-center justify-center h-screen bg-gradient-to-r from-green-400 to-blue-500">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Create New To-Do List</h2>
@@ -53,4 +48,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </body>
-</html>
+<?php include_once('partials/footer.php'); ?>
