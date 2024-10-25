@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <?php include_once('partials/header.php'); ?>
-<body class="flex items-center justify-center h-screen bg-gradient-to-r from-pink-500 to-yellow-500">
-    <div class="bg-white bg-opacity-10 p-10 rounded-lg shadow-lg max-w-md w-full">
-        <h2 class="text-3xl font-bold text-white mb-6 text-center">Register</h2>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-yellow-500 p-4">
+    <div class="bg-white bg-opacity-10 p-6 sm:p-10 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">Register</h2>
         <?php 
         if (isset($error)) { echo "<p class='text-red-500 mb-4 text-center'>$error</p>"; }
         if (isset($success)) { echo "<p class='text-green-500 mb-4 text-center'>$success</p>"; }

@@ -47,10 +47,9 @@ $stmt->close();
 ?>
 
 <?php include_once('partials/header.php'); ?>
-
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Edit Profile</h2>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 sm:p-8">
+    <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-blue-600">Edit Profile</h2>
         <form method="post" action="" class="space-y-4">
             <div>
                 <label for="username" class="block text-gray-700">Username:</label>
@@ -74,10 +73,9 @@ $stmt->close();
                 Changes</button>
         </form>
         <div class="text-center mt-6">
-            <a href="dashboard.php" class="text-blue-500 hover:underline">Back to Dashboard</a>
+            <a href="dashboard.php" class="block w-full text-blue-500 hover:underline text-center py-2">Back to Dashboard</a>
         </div>
     </div>
 </body>
-
 </html>
 <?php include_once('partials/footer.php'); ?>

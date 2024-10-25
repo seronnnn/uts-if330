@@ -1,6 +1,8 @@
 <?php
 include('includes/auth.php');
 
+$_PAGETITLE = "View Todo List";
+
 $todo_list_id = $_GET['id'];
 $status_filter = isset($_GET['status']) ? $_GET['status'] : 'all';
 $search_keyword = isset($_GET['search']) ? $_GET['search'] : '';
@@ -39,18 +41,20 @@ $tasks = $stmt->get_result();
 ?>
 
 <?php include_once('partials/header.php'); ?>
-<body class="bg-gradient-to-r from-indigo-300 to-blue-500 min-h-screen flex items-center justify-center">
-    <div id="content" class="bg-white p-8 rounded-lg shadow-lg w-full flex flex-col justify-between">
-        <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700"><?php echo htmlspecialchars($title); ?></h2>
+<body class="bg-gradient-to-r from-indigo-300 to-blue-500 min-h-screen flex items-center justify-center p-4">
+    <div id="content" class="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-2xl flex flex-col justify-between">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-indigo-700"><?php echo htmlspecialchars($title); ?></h2>
         <div class="text-center mb-6">
             <a href="create_task.php?todo_list_id=<?php echo $todo_list_id; ?>" class="inline-block px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300">
                 <i class="fas fa-plus-circle"></i> Add New Task
             </a>
         </div>
-        <form method="get" action="" class="mb-6 flex justify-between items-center">
+        <form method="get" action="" class="mb-6 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <input type="hidden" name="id" value="<?php echo $todo_list_id; ?>">
-            <input type="text" name="search" placeholder="Search tasks..." value="<?php echo htmlspecialchars($search_keyword); ?>" class="w-2/3 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 mr-2">
-            <select name="status" class="px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 mr-2">
+            <input type="text" name="search" placeholder="Search tasks..." 
+                value="<?php echo htmlspecialchars($search_keyword); ?>" 
+                class="w-full sm:w-2/3 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        <select name="status" class="w-full sm:w-auto px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
                 <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All Tasks</option>
                 <option value="completed" <?php echo $status_filter === 'completed' ? 'selected' : ''; ?>>Completed Tasks</option>
                 <option value="on going" <?php echo $status_filter === 'incomplete' ? 'selected' : ''; ?>>on going Tasks</option>
@@ -58,8 +62,10 @@ $tasks = $stmt->get_result();
             <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition duration-300">Filter</button>
         </form>
         <ul class="space-y-4 flex-grow">
-            <?php while ($task = $tasks->fetch_assoc()) { ?>
-                <li class="flex justify-between items-center bg-gray-50 p-4 rounded-md border border-gray-200 hover:bg-indigo-100 transition duration-300 cursor-pointer" onclick="openModal(<?php echo $task['id']; ?>, '<?php echo addslashes($task['description']); ?>', '<?php echo $task['is_completed']; ?>')">
+        <ul class="space-y-4 flex-grow">
+    <?php while ($task = $tasks->fetch_assoc()) { ?>
+        <li class="flex flex-col sm:flex-row justify-between items-center bg-gray-50 p-4 rounded-md border border-gray-200 hover:bg-indigo-100 transition duration-300 cursor-pointer" 
+            onclick="openModal(<?php echo $task['id']; ?>, '<?php echo addslashes($task['description']); ?>', '<?php echo $task['is_completed']; ?>')">
                     <span class="flex items-center flex-grow <?php echo $task['is_completed'] ? 'line-through text-gray-500' : 'text-gray-800'; ?>">
                         <i class="<?php echo $task['is_completed'] ? 'fas fa-check-circle text-green-500 mr-2' : 'fas fa-circle text-gray-400 mr-2'; ?>"></i>
                         <?php echo htmlspecialchars($task['description']); ?>
@@ -176,7 +182,7 @@ $tasks = $stmt->get_result();
         }
         .modal-content {
             background: white;
-            padding: 20px;
+            padding: 16px;
             border-radius: 12px;
             max-width: 400px;
             width: 100%;

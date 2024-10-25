@@ -40,10 +40,10 @@ if (isset($_GET['todo_list_id'])) {
 ?>
 
 <?php include_once('partials/header.php'); ?>
-<body class="flex items-center justify-center h-screen bg-gradient-to-r from-green-400 to-blue-500">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Add New Task</h2>
-        <?php if (isset($error)) { echo "<p class='text-red-500 mb-4'>$error</p>"; } ?>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-400 to-blue-500 p-4">
+    <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-blue-600">Add New Task</h2>
+        <?php if (isset($error)) { echo "<p class='text-red-500 mb-4 text-center'>$error</p>"; } ?>
         <form method="post" action="" class="space-y-4">
             <div>
                 <label for="task_description" class="block text-gray-700">Task Description:</label>
